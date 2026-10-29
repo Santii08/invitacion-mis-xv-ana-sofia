@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <meta name="theme-color" content="#b6a3d9">
+  <meta name="description" content="Invitación especial a los XV Años de Ana Sofía - Una noche mágica para celebrar.">
+
+  <!-- Open Graph / Redes Sociales y WhatsApp -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="✨ Mis XV - Ana Sofía ✨">
+  <meta property="og:description" content="Una noche mágica para celebrar. Acompáñame este Viernes 27 de Noviembre de 2026. ¡Confirma tu asistencia!">
+  <meta property="og:image" content="assets/tarjeta-original.jpg">
+
+  <title>Mis XV - Ana Sofía | Invitación</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Cinzel:wght@400;600;700&family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Partículas y destellos de fondo -->
+  <div id="particles-container" aria-hidden="true"></div>
+
+  <!-- Botón flotante de Música -->
+  <aside class="music-controller" aria-label="Controlador de música">
+    <button id="btnMusic" class="music-btn" title="Reproducir / Pausar Música" aria-label="Música de fondo">
+      <i class="fa-solid fa-compact-disc disc-icon"></i>
+      <span class="music-tooltip">Música de fondo</span>
+    </button>
+    <audio id="bgMusic" loop preload="auto">
+      <!-- Melodía de piano/vals instrumental sin copyright -->
+      <source src="https://cdn.pixabay.com/download/audio/2022/05/16/audio_db6591201e.mp3?filename=romantic-waltz-112395.mp3" type="audio/mp3">
+    </audio>
+  </aside>
+
+  <!-- Tarjeta Principal de Invitación -->
+  <main class="invitation-wrapper">
+    
+    <!-- Marco decorativo exterior -->
+    <div class="card-frame">
+
+      <!-- Guirnalda de luces superior -->
+      <header class="lights-banner" aria-hidden="true">
+        <div class="light-wire"></div>
+        <div class="bulb-row">
+          <span class="bulb"></span><span class="bulb"></span><span class="bulb"></span>
+          <span class="bulb"></span><span class="bulb"></span><span class="bulb"></span>
+          <span class="bulb"></span><span class="bulb"></span><span class="bulb"></span>
+        </div>
+      </header>
+
+      <!-- SECCIÓN: Portada / Encabezado -->
+      <section class="hero-section">
+        <div class="floral-top" aria-hidden="true"></div>
+        
+        <div class="heart-icon-wrapper">
+          <i class="fa-regular fa-heart"></i>
+        </div>
+
+        <h2 class="sub-greeting">Te invito a celebrar</h2>
+        <h1 class="main-title">Mis XV</h1>
+        
+        <div class="divider-heart">
+          <span class="line"></span>
+          <i class="fa-solid fa-heart"></i>
+          <span class="line"></span>
+        </div>
+
+        <p class="tagline">Una noche mágica para celebrar</p>
+        <h2 class="celebrant-name">Ana Sofia</h2>
+
+        <div class="divider-heart">
+          <span class="line"></span>
+          <i class="fa-solid fa-heart"></i>
+          <span class="line"></span>
+        </div>
+
+        <!-- Banner de Bienvenida Personalizada (se llena automáticamente con el link) -->
+        <div id="guestVipBanner" class="guest-vip-card hidden">
+          <div class="vip-ribbon"><i class="fa-solid fa-envelope-open-text"></i> Pase Especial</div>
+          <p class="vip-to">Invitación para:</p>
+          <h3 id="guestNameDisplay" class="vip-name">Querido/a Invitado/a</h3>
+          <p class="vip-passes">Tienes <span id="guestPassesCount">1</span> <span id="guestPassesLabel">pase reservado</span></p>
+        </div>
+      </section>
+
+      <!-- SECCIÓN: Cuenta Regresiva -->
+      <section class="countdown-section">
+        <h3 class="section-subtitle"><i class="fa-regular fa-clock"></i> Faltan muy pocos días</h3>
+        <div class="countdown-grid" id="countdown">
+          <div class="countdown-box">
+            <span class="time-number" id="cdDays">00</span>
+            <span class="time-label">Días</span>
+          </div>
+          <div class="countdown-box">
+            <span class="time-number" id="cdHours">00</span>
+            <span class="time-label">Horas</span>
+          </div>
+          <div class="countdown-box">
+            <span class="time-number" id="cdMinutes">00</span>
+            <span class="time-label">Min</span>
+          </div>
+          <div class="countdown-box">
+            <span class="time-number" id="cdSeconds">00</span>
+            <span class="time-label">Seg</span>
+          </div>
+        </div>
+
+        <!-- Botón para agendar al calendario -->
+        <div class="calendar-btn-container">
+          <button id="btnAddToCalendar" class="btn-secondary">
+            <i class="fa-solid fa-calendar-plus"></i> Agendar en mi Calendario
+          </button>
+        </div>
+      </section>
+
+      <!-- SECCIÓN: Datos Clave (Fecha, Hora, Lugar) -->
+      <section class="details-section">
+        <div class="detail-card">
+          <div class="detail-icon"><i class="fa-regular fa-calendar-check"></i></div>
+          <span class="detail-header">DÍA</span>
+          <h4 class="detail-title">Viernes</h4>
+          <div class="detail-date-badge">27</div>
+          <p class="detail-footer">NOVIEMBRE 2026</p>
+        </div>
+
+        <div class="detail-card">
+          <div class="detail-icon"><i class="fa-regular fa-clock"></i></div>
+          <span class="detail-header">HORA</span>
+          <h4 class="detail-title">7:00 p. m.</h4>
+          <p class="detail-footer">Recepción puntual</p>
+        </div>
+
+        <div class="detail-card full-width">
+          <div class="detail-icon"><i class="fa-solid fa-location-dot"></i></div>
+          <span class="detail-header">RECEPCIÓN</span>
+          <h4 class="detail-title venue-name">CALLE 34 #15-24</h4>
+          <p class="venue-city">Barrio Teusaquillo &bull; Bogotá, Colombia</p>
+          
+          <div class="map-actions">
+            <a href="https://www.google.com/maps/search/?api=1&query=Calle+34+%2315-24%2C+Teusaquillo%2C+Bogot%C3%A1" target="_blank" rel="noopener noreferrer" class="btn-location btn-gmaps">
+              <i class="fa-brands fa-google"></i> Google Maps
+            </a>
+            <a href="https://waze.com/ul?q=Calle%2034%2015-24%20Teusaquillo%20Bogota" target="_blank" rel="noopener noreferrer" class="btn-location btn-waze">
+              <i class="fa-brands fa-waze"></i> Waze
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECCIÓN: Código de Vestimenta -->
+      <section class="dresscode-section">
+        <div class="dresscode-badge">
+          <i class="fa-solid fa-vest-patches"></i>
+          <span>TRAJE FORMAL</span>
+        </div>
+        
+        <div class="divider-heart">
+          <span class="line"></span>
+          <i class="fa-solid fa-heart"></i>
+          <span class="line"></span>
+        </div>
+
+        <div class="dresscode-reservation">
+          <i class="fa-solid fa-circle-exclamation reservation-icon"></i>
+          <p class="reservation-text">
+            <strong>Reserva de Color:</strong> Se reserva exclusivamente el color 
+            <span class="tag-color blue">Azul</span> y <span class="tag-color lila">Lila</span> para la quinceañera.
+          </p>
+        </div>
+      </section>
+
+      <!-- SECCIÓN: Lluvia de Sobres -->
+      <section class="gift-section">
+        <div class="gift-icon-container">
+          <i class="fa-regular fa-envelope-open"></i>
+        </div>
+        <h3 class="gift-title">Lluvia de Sobres</h3>
+        <p class="gift-text">
+          El mayor regalo para mí es tu valiosa presencia y compartir juntos esta noche mágica.
+          Si deseas hacerme un detalle, en la entrada habrá un buzón dispuesto para lluvia de sobres.
+        </p>
+      </section>
+
+      <!-- SECCIÓN: Sugerir Canción -->
+      <section class="song-section">
+        <div class="song-card">
+          <i class="fa-solid fa-music"></i>
+          <h4>¿Qué canción no puede faltar?</h4>
+          <p>¡Ayúdanos a armar la playlist perfecta para bailar toda la noche!</p>
+          <button id="btnOpenSongModal" class="btn-secondary btn-small">
+            <i class="fa-solid fa-record-vinyl"></i> Sugerir canción
+          </button>
+        </div>
+      </section>
+
+      <!-- SECCIÓN PRINCIPAL: Confirmación de Asistencia (RSVP) -->
+      <section class="rsvp-section" id="seccion-confirmar">
+        <div class="rsvp-header">
+          <span class="rsvp-pill">CONFIRMACIÓN</span>
+          <h3 class="rsvp-title">¿Nos acompañas?</h3>
+          <p class="rsvp-desc">
+            Por favor confirma tu asistencia antes del <strong>10 de Noviembre de 2026</strong> para coordinar cada detalle de la recepción.
+          </p>
+        </div>
+
+        <form id="rsvpForm" class="rsvp-form" novalidate>
+          <!-- Campo: Nombre -->
+          <div class="form-group">
+            <label for="rsvpName">
+              <i class="fa-solid fa-user"></i> Tu Nombre Completo:
+            </label>
+            <input type="text" id="rsvpName" name="nombre" class="form-control" placeholder="Ej: Diana Pérez" required>
+          </div>
+
+          <!-- Campo: Respuesta Sí/No -->
+          <div class="form-group">
+            <label><i class="fa-solid fa-circle-check"></i> ¿Podrás asistir?</label>
+            <div class="radio-cards">
+              <label class="radio-card">
+                <input type="radio" name="asistencia" value="Si" checked>
+                <div class="card-content">
+                  <i class="fa-solid fa-champagne-glasses"></i>
+                  <span>¡Sí, allí estaré!</span>
+                </div>
+              </label>
+
+              <label class="radio-card">
+                <input type="radio" name="asistencia" value="No">
+                <div class="card-content">
+                  <i class="fa-solid fa-heart-crack"></i>
+                  <span>No podré asistir</span>
+                </div>
+              </label>
+            </div>
+          </div>
+
+          <!-- Campos dinámicos si confirma que SÍ -->
+          <div id="attendingDetails" class="attending-details">
+            <div class="form-group">
+              <label for="rsvpPax">
+                <i class="fa-solid fa-users"></i> ¿Cuántas personas asistirán en tu grupo?
+              </label>
+              <select id="rsvpPax" name="personas" class="form-control">
+                <option value="1">1 persona</option>
+                <option value="2" selected>2 personas</option>
+                <option value="3">3 personas</option>
+                <option value="4">4 personas</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="rsvpGuestsNames">
+                <i class="fa-solid fa-address-book"></i> Nombres de los acompañantes:
+              </label>
+              <input type="text" id="rsvpGuestsNames" name="acompanantes" class="form-control" placeholder="Ej: Oscar Edwards">
+            </div>
+
+            <div class="form-group">
+              <label for="rsvpDiet">
+                <i class="fa-solid fa-utensils"></i> ¿Alguna alergia o restricción alimentaria? <small>(opcional)</small>
+              </label>
+              <input type="text" id="rsvpDiet" name="restricciones" class="form-control" placeholder="Ej: Vegetariano, intolerancia a lácteos, etc.">
+            </div>
+
+            <div class="form-group">
+              <label for="rsvpSong">
+                <i class="fa-solid fa-guitar"></i> Canción recomendada para bailar: <small>(opcional)</small>
+              </label>
+              <input type="text" id="rsvpSong" name="cancion" class="form-control" placeholder="Nombre de canción y artista">
+            </div>
+          </div>
+
+          <!-- Mensaje / Felicitación -->
+          <div class="form-group">
+            <label for="rsvpMessage">
+              <i class="fa-solid fa-comment-heart"></i> Mensaje para Ana Sofía: <small>(opcional)</small>
+            </label>
+            <textarea id="rsvpMessage" name="mensaje" class="form-control" rows="3" placeholder="Dedícale unas lindas palabras a la quinceañera..."></textarea>
+          </div>
+
+          <!-- Botón de Envío -->
+          <button type="submit" id="btnSubmitRsvp" class="btn-primary btn-submit">
+            <span class="btn-text"><i class="fa-solid fa-paper-plane"></i> Enviar Confirmación</span>
+            <span class="btn-spinner hidden"><i class="fa-solid fa-spinner fa-spin"></i> Guardando...</span>
+          </button>
+
+          <!-- Mensajes de estado -->
+          <div id="rsvpSuccessMessage" class="alert alert-success hidden">
+            <i class="fa-solid fa-circle-check"></i>
+            <div>
+              <strong>¡Confirmación registrada exitosamente!</strong>
+              <p>Muchas gracias por responder. Hemos recibido tus datos en privado.</p>
+              <button type="button" id="btnNotifyWhatsapp" class="btn-whatsapp-notify">
+                <i class="fa-brands fa-whatsapp"></i> Enviar aviso por WhatsApp también
+              </button>
+            </div>
+          </div>
+
+          <div id="rsvpErrorMessage" class="alert alert-error hidden">
+            <i class="fa-solid fa-triangle-exclamation"></i>
+            <p>Ocurrió un inconveniente al guardar. Puedes enviarnos tu respuesta directamente a WhatsApp tocando el botón a continuación:</p>
+            <a href="https://wa.me/573203976424?text=Hola%20Ana%20Sofia,%20confirmo%20mi%20asistencia%20a%20tus%20XV." target="_blank" rel="noopener noreferrer" class="btn-whatsapp-notify">
+              <i class="fa-brands fa-whatsapp"></i> Confirmar por WhatsApp
+            </a>
+          </div>
+        </form>
+
+        <div class="phone-contact">
+          <p>O si prefieres, comunícate directamente al:</p>
+          <a href="tel:+573203976424" class="phone-link">
+            <i class="fa-solid fa-phone"></i> 320 397 6424
+          </a>
+        </div>
+      </section>
+
+      <!-- Mensaje de Cierre -->
+      <footer class="footer-section">
+        <div class="divider-heart">
+          <span class="line"></span>
+          <i class="fa-solid fa-heart"></i>
+          <span class="line"></span>
+        </div>
+        <h2 class="closing-phrase">¡No faltes!</h2>
+        <p class="closing-sign">Ana Sofia &bull; 2026</p>
+        
+        <div class="admin-access-link">
+          <a href="admin.html" title="Panel privado del organizador">
+            <i class="fa-solid fa-gear"></i> Generador de enlaces para invitados
+          </a>
+        </div>
+      </footer>
+
+    </div><!-- /.card-frame -->
+  </main>
+
+  <!-- Modal para Sugerir Canción Rápida -->
+  <div id="songModal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="songModalTitle">
+    <div class="modal-box">
+      <button class="modal-close" id="btnCloseSongModal" aria-label="Cerrar">&times;</button>
+      <div class="modal-header">
+        <i class="fa-solid fa-music modal-icon"></i>
+        <h3 id="songModalTitle">Sugerir Canción</h3>
+      </div>
+      <p class="modal-desc">¿Qué tema musical no puede faltar en la fiesta?</p>
+      <form id="quickSongForm">
+        <div class="form-group">
+          <input type="text" id="quickSongInput" class="form-control" placeholder="Canción y artista..." required>
+        </div>
+        <div class="form-group">
+          <input type="text" id="quickSongUser" class="form-control" placeholder="Tu nombre...">
+        </div>
+        <button type="submit" class="btn-primary full-width">
+          <i class="fa-solid fa-check"></i> Enviar Sugerencia
+        </button>
+      </form>
+      <div id="quickSongFeedback" class="alert alert-success hidden" style="margin-top: 15px;">
+        ¡Canción sugerida con éxito! 🎉
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/app.js"></script>
+</body>
+</html>

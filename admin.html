@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panel de Organización & Generador de Links | Mis XV Ana Sofía</title>
+
+  <!-- Google Fonts & FontAwesome -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <style>
+    :root {
+      --primary: #5c308c;
+      --secondary: #7d52af;
+      --bg: #f5f4fb;
+      --card-bg: #ffffff;
+      --text: #2c2140;
+      --gold: #cba135;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      padding: 24px 16px 60px 16px;
+      line-height: 1.5;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 28px;
+    }
+
+    header h1 {
+      font-family: 'Playfair Display', serif;
+      color: var(--primary);
+      font-size: 2rem;
+    }
+
+    header p {
+      color: #6d6282;
+      font-size: 0.95rem;
+      margin-top: 4px;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 16px;
+      color: var(--secondary);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: 16px;
+      padding: 24px;
+      margin-bottom: 24px;
+      box-shadow: 0 6px 20px rgba(92, 48, 140, 0.08);
+      border: 1px solid #e7dff2;
+    }
+
+    .card-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.35rem;
+      color: var(--primary);
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .card-desc {
+      color: #6d6282;
+      font-size: 0.88rem;
+      margin-bottom: 18px;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+
+    @media (max-width: 600px) {
+      .form-row { grid-template-columns: 1fr; }
+    }
+
+    .form-group {
+      margin-bottom: 14px;
+    }
+
+    label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 12px 14px;
+      font-family: inherit;
+      font-size: 0.92rem;
+      border: 1.5px solid #d4cde3;
+      border-radius: 8px;
+      background: #faf9fd;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+      background: #fff;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 20px;
+      font-size: 0.92rem;
+      font-weight: 600;
+      border-radius: 25px;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s ease;
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: #fff;
+    }
+    .btn-primary:hover { background: var(--secondary); }
+
+    .btn-whatsapp {
+      background: #25d366;
+      color: #fff;
+    }
+    .btn-whatsapp:hover { background: #1ebd59; }
+
+    .btn-outline {
+      background: #fff;
+      color: var(--primary);
+      border: 1.5px solid var(--primary);
+    }
+    .btn-outline:hover { background: #f2eafd; }
+
+    .result-box {
+      margin-top: 20px;
+      padding: 18px;
+      background: #f7f4fc;
+      border-radius: 12px;
+      border: 1.5px dashed var(--secondary);
+    }
+
+    .result-box h4 {
+      font-size: 0.95rem;
+      color: var(--primary);
+      margin-bottom: 8px;
+    }
+
+    .url-display {
+      background: #fff;
+      padding: 10px 12px;
+      border-radius: 6px;
+      border: 1px solid #dcd3eb;
+      font-family: monospace;
+      font-size: 0.88rem;
+      color: #4b396b;
+      word-break: break-all;
+      margin-bottom: 12px;
+    }
+
+    .message-preview {
+      background: #fff;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid #dcd3eb;
+      font-size: 0.88rem;
+      color: #333;
+      white-space: pre-wrap;
+      margin-bottom: 14px;
+    }
+
+    .action-buttons {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    /* Tabla de confirmaciones */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+    .stat-card {
+      background: #faf8fd;
+      border: 1px solid #e7dff2;
+      border-radius: 10px;
+      padding: 14px;
+      text-align: center;
+    }
+    .stat-val {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+    .stat-label {
+      font-size: 0.78rem;
+      color: #6d6282;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+      margin-top: 10px;
+    }
+    th, td {
+      padding: 10px 8px;
+      text-align: left;
+      border-bottom: 1px solid #eee;
+    }
+    th {
+      background: #f2eafd;
+      color: var(--primary);
+      font-weight: 600;
+    }
+
+    .tag-si {
+      background: #d4edda;
+      color: #155724;
+      padding: 2px 8px;
+      border-radius: 10px;
+      font-weight: 600;
+      font-size: 0.75rem;
+    }
+    .tag-no {
+      background: #f8d7da;
+      color: #721c24;
+      padding: 2px 8px;
+      border-radius: 10px;
+      font-weight: 600;
+      font-size: 0.75rem;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 24px;
+      color: #8c829e;
+      font-size: 0.9rem;
+    }
+
+    .hidden { display: none; }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <a href="index.html" class="back-link">
+      <i class="fa-solid fa-arrow-left"></i> Volver a la Invitación
+    </a>
+
+    <header>
+      <h1>Panel de Organización &bull; Mis XV Ana Sofía</h1>
+      <p>Genera invitaciones personalizadas con pases y gestiona tus confirmaciones</p>
+    </header>
+
+    <!-- HERRAMIENTA 1: GENERADOR DE LINKS PARA INVITADOS -->
+    <div class="card">
+      <h2 class="card-title">
+        <i class="fa-brands fa-whatsapp" style="color: #25d366;"></i> Generador de Enlaces Personalizados
+      </h2>
+      <p class="card-desc">
+        Escribe el nombre del invitado y la cantidad de pases que le asignarás. Esto creará un enlace exclusivo que personalizará su invitación y el mensaje listo para enviar por WhatsApp.
+      </p>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="inputGuestName">Nombre del Invitado o Familia:</label>
+          <input type="text" id="inputGuestName" placeholder="Ej: Edward Ramirez y Adriana Chinchilla">
+        </div>
+        <div class="form-group">
+          <label for="inputPasses">Pases asignados:</label>
+          <select id="inputPasses">
+            <option value="1">1 pase (Individual)</option>
+            <option value="2" selected>2 pases (Pareja)</option>
+            <option value="3">3 pases</option>
+            <option value="4">4 pases (Familia)</option>
+            <option value="5">5 pases</option>
+            <option value="6">6 pases</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="inputGuestPhone">Número de WhatsApp del invitado <small>(opcional)</small>:</label>
+        <input type="tel" id="inputGuestPhone" placeholder="Ej: 3001234567 o 573001234567">
+      </div>
+
+      <button id="btnGenerate" class="btn btn-primary">
+        <i class="fa-solid fa-wand-magic-sparkles"></i> Generar Invitación & Mensaje
+      </button>
+
+      <!-- RESULTADO GENERADO -->
+      <div id="resultBox" class="result-box hidden">
+        <h4>1. Enlace personalizado:</h4>
+        <div id="generatedUrl" class="url-display"></div>
+
+        <h4>2. Mensaje para enviar por WhatsApp:</h4>
+        <div id="generatedMessage" class="message-preview"></div>
+
+        <div class="action-buttons">
+          <button id="btnCopyMessage" class="btn btn-outline">
+            <i class="fa-regular fa-copy"></i> Copiar Mensaje
+          </button>
+          <button id="btnSendWhatsapp" class="btn btn-whatsapp">
+            <i class="fa-brands fa-whatsapp"></i> Abrir en WhatsApp
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- HERRAMIENTA 2: GOOGLE SHEETS & RESPUESTAS LOCALES -->
+    <div class="card">
+      <h2 class="card-title">
+        <i class="fa-solid fa-file-excel" style="color: #107c41;"></i> Respuestas & Google Sheets Privado
+      </h2>
+      <p class="card-desc">
+        Tus respuestas se guardan en tu Google Sheet personal. Aquí también puedes consultar las respuestas que se hayan recibido o probado en este navegador:
+      </p>
+
+      <div class="stats-row">
+        <div class="stat-card">
+          <div class="stat-val" id="statYes">0</div>
+          <div class="stat-label">Confirmaron que Sí</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-val" id="statPax">0</div>
+          <div class="stat-label">Total Personas</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-val" id="statNo">0</div>
+          <div class="stat-label">No Asistirán</div>
+        </div>
+      </div>
+
+      <div style="overflow-x: auto;">
+        <table id="tblResponses">
+          <thead>
+            <tr>
+              <th>Fecha</th>
+              <th>Invitado</th>
+              <th>Estado</th>
+              <th>Cupos</th>
+              <th>Acompañantes</th>
+              <th>Canción</th>
+            </tr>
+          </thead>
+          <tbody id="tblBody">
+            <!-- Dinámico -->
+          </tbody>
+        </table>
+      </div>
+
+      <div id="emptyResponses" class="empty-state">
+        <i class="fa-regular fa-envelope" style="font-size: 2rem; margin-bottom: 8px; display: block;"></i>
+        Aún no hay respuestas registradas en la memoria local de este navegador. Recuerda revisar tu Google Sheets en vivo.
+      </div>
+
+      <div style="margin-top: 18px; text-align: right;">
+        <button id="btnClearLocal" class="btn btn-outline" style="font-size: 0.8rem; padding: 6px 14px;">
+          <i class="fa-solid fa-trash"></i> Limpiar pruebas locales
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    // Generador de enlaces
+    const baseUrl = window.location.origin + window.location.pathname.replace("admin.html", "index.html");
+
+    const inputName = document.getElementById("inputGuestName");
+    const inputPasses = document.getElementById("inputPasses");
+    const inputPhone = document.getElementById("inputGuestPhone");
+    const btnGen = document.getElementById("btnGenerate");
+    const resultBox = document.getElementById("resultBox");
+    const generatedUrl = document.getElementById("generatedUrl");
+    const generatedMessage = document.getElementById("generatedMessage");
+    const btnCopy = document.getElementById("btnCopyMessage");
+    const btnWhatsapp = document.getElementById("btnSendWhatsapp");
+
+    btnGen.addEventListener("click", () => {
+      const name = inputName.value.trim() || "Familia y Amigos";
+      const passes = inputPasses.value;
+      const cleanPhone = inputPhone.value.trim().replace(/\D/g, "");
+
+      const url = `${baseUrl}?invitado=${encodeURIComponent(name)}&pases=${passes}`;
+      const passesText = passes === "1" ? "1 pase especial" : `${passes} pases especiales`;
+
+      const msg = `✨ ¡Hola ${name}! ✨\n\n` +
+        `Con mucha alegría te invitamos a los XV Años de *Ana Sofía* 👑.\n` +
+        `Una noche mágica para celebrar juntos este momento tan especial.\n\n` +
+        `🎟️ Hemos reservado *${passesText}* para ti.\n\n` +
+        `📅 *Viernes 27 de Noviembre de 2026 - 7:00 p. m.*\n` +
+        `📍 Recepción: Calle 34 #15-24, Teusaquillo\n\n` +
+        `Ingresa a tu invitación digital para ver todos los detalles (música, ubicación, dress code) y confirmar tu asistencia:\n` +
+        `${url}\n\n` +
+        `¡Esperamos contar con tu valiosa compañía! 💖`;
+
+      generatedUrl.textContent = url;
+      generatedMessage.textContent = msg;
+      resultBox.classList.remove("hidden");
+
+      // Botón copiar
+      btnCopy.onclick = () => {
+        navigator.clipboard.writeText(msg).then(() => {
+          btnCopy.innerHTML = '<i class="fa-solid fa-check"></i> ¡Copiado!';
+          setTimeout(() => {
+            btnCopy.innerHTML = '<i class="fa-regular fa-copy"></i> Copiar Mensaje';
+          }, 2000);
+        });
+      };
+
+      // Botón enviar por WhatsApp
+      btnWhatsapp.onclick = () => {
+        let phoneTarget = cleanPhone;
+        if (phoneTarget && phoneTarget.length === 10 && !phoneTarget.startsWith("57")) {
+          phoneTarget = "57" + phoneTarget; // Código país Colombia
+        }
+        const waLink = phoneTarget 
+          ? `https://wa.me/${phoneTarget}?text=${encodeURIComponent(msg)}`
+          : `https://wa.me/?text=${encodeURIComponent(msg)}`;
+        window.open(waLink, "_blank");
+      };
+    });
+
+    // Cargar confirmaciones guardadas localmente
+    function loadLocalResponses() {
+      const list = JSON.parse(localStorage.getItem("confirmaciones_ana_sofia") || "[]");
+      const tbody = document.getElementById("tblBody");
+      const empty = document.getElementById("emptyResponses");
+      
+      let yesCount = 0;
+      let noCount = 0;
+      let totalPax = 0;
+
+      tbody.innerHTML = "";
+
+      if (list.length === 0) {
+        empty.classList.remove("hidden");
+      } else {
+        empty.classList.add("hidden");
+        list.forEach(r => {
+          if (r.asiste === "Si") {
+            yesCount++;
+            totalPax += parseInt(r.personas, 10) || 0;
+          } else {
+            noCount++;
+          }
+
+          const tr = document.createElement("tr");
+          tr.innerHTML = `
+            <td><small>${r.fechaHora || '-'}</small></td>
+            <td><strong>${r.nombre}</strong></td>
+            <td><span class="${r.asiste === 'Si' ? 'tag-si' : 'tag-no'}">${r.asiste === 'Si' ? 'Asiste' : 'No asiste'}</span></td>
+            <td>${r.personas || '0'}</td>
+            <td>${r.acompanantes || '-'}</td>
+            <td><small>${r.cancion || '-'}</small></td>
+          `;
+          tbody.appendChild(tr);
+        });
+      }
+
+      document.getElementById("statYes").textContent = yesCount;
+      document.getElementById("statPax").textContent = totalPax;
+      document.getElementById("statNo").textContent = noCount;
+    }
+
+    document.getElementById("btnClearLocal").addEventListener("click", () => {
+      if (confirm("¿Deseas vaciar la lista de pruebas locales?")) {
+        localStorage.removeItem("confirmaciones_ana_sofia");
+        loadLocalResponses();
+      }
+    });
+
+    loadLocalResponses();
+  </script>
+</body>
+</html>
