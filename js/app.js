@@ -23,7 +23,6 @@ document.addEventListener("DOMContentLoaded", () => {
   initMusicPlayer();
   initCalendarButton();
   initRsvpForm();
-  initSongModal();
 });
 
 /* ----------------------------------------------------
@@ -39,7 +38,6 @@ function initUrlParams() {
   const passesDisplay = document.getElementById("guestPassesCount");
   const passesLabel = document.getElementById("guestPassesLabel");
   const inputName = document.getElementById("rsvpName");
-  const selectPax = document.getElementById("rsvpPax");
 
   if (guestName) {
     const cleanName = decodeURIComponent(guestName.replace(/\+/g, " "));
@@ -54,28 +52,16 @@ function initUrlParams() {
       passesLabel.textContent = passes === 1 ? "pase reservado" : "pases reservados";
     }
 
-    // Configurar el selector de personas según los pases permitidos
-    if (selectPax) {
-      selectPax.innerHTML = "";
-      for (let i = 1; i <= Math.max(passes, 4); i++) {
-        const opt = document.createElement("option");
-        opt.value = i;
-        opt.textContent = `${i} ${i === 1 ? "persona" : "personas"}`;
-        if (i === passes) opt.selected = true;
-        selectPax.appendChild(opt);
-      }
-    }
-
     vipBanner.classList.remove("hidden");
   }
 }
 
 /* ----------------------------------------------------
    2. CUENTA REGRESIVA AL EVENTO
-   Fecha: 27 de Noviembre de 2026 a las 7:00 PM (Bogotá, UTC-5)
+   Fecha: 27 de Noviembre de 2026 a las 7:30 PM (Bogotá, UTC-5)
    ---------------------------------------------------- */
 function initCountdown() {
-  const eventDate = new Date("2026-11-27T19:00:00-05:00").getTime();
+  const eventDate = new Date("2026-11-27T19:30:00-05:00").getTime();
 
   const elDays = document.getElementById("cdDays");
   const elHours = document.getElementById("cdHours");
@@ -155,11 +141,12 @@ function initCalendarButton() {
   if (!btn) return;
 
   btn.addEventListener("click", () => {
-    // 27 Nov 2026 19:00 - 28 Nov 2026 03:00 (Bogotá UTC-5 => 20261128T000000Z a 20261128T080000Z)
+    // 27 Nov 2026 19:30 - 28 Nov 2026 03:00 (Bogotá UTC-5 => 20261128T003000Z a 20261128T080000Z)
     const title = encodeURIComponent("Mis XV - Ana Sofía");
-    const dates = "20261128T000000Z/20261128T080000Z";
+    const dates = "20261128T003000Z/20261128T080000Z";
     const details = encodeURIComponent(
       "Celebración de los XV Años de Ana Sofía.\n" +
+      "Hora: 7:30 p. m.\n" +
       "Traje formal (Nota: Se reserva el color azul y lila).\n" +
       "¡Te esperamos para vivir una noche inolvidable!"
     );
@@ -198,25 +185,23 @@ function initRsvpForm() {
 
     const nombre = document.getElementById("rsvpName").value.trim();
     if (!nombre) {
-      alert("Por favor escribe tu nombre para registrar tu respuesta.");
+      alert("Por favor escribe tu nombre completo y el de tus acompañantes.");
       return;
     }
 
     const asistira = document.querySelector('input[name="asistencia"]:checked').value;
-    const personas = asistira === "Si" ? document.getElementById("rsvpPax").value : "0";
-    const acompanantes = asistira === "Si" ? document.getElementById("rsvpGuestsNames").value.trim() : "";
-    const restricciones = asistira === "Si" ? document.getElementById("rsvpDiet").value.trim() : "";
-    const cancion = asistira === "Si" ? document.getElementById("rsvpSong").value.trim() : "";
+    const dietInput = document.getElementById("rsvpDiet");
+    const restricciones = (asistira === "Si" && dietInput) ? dietInput.value.trim() : "";
     const mensaje = document.getElementById("rsvpMessage").value.trim();
 
     const dataPayload = {
       fechaHora: new Date().toLocaleString("es-CO", { timeZone: "America/Bogota" }),
       nombre,
       asiste: asistira,
-      personas,
-      acompanantes: acompanantes || "Ninguno",
+      personas: asistira === "Si" ? "Confirmado" : "0",
+      acompanantes: "-",
       restricciones: restricciones || "Ninguna",
-      cancion: cancion || "Sin sugerencia",
+      cancion: "-",
       mensaje: mensaje || "Sin mensaje"
     };
 
@@ -264,14 +249,12 @@ function initRsvpForm() {
         btnWhatsapp.onclick = () => {
           let msg = `Hola Ana Sofía ✨,\n`;
           if (asistira === "Si") {
-            msg += `¡Confirmo mi asistencia a tus XV!\n`;
-            msg += `👤 Nombre: ${nombre}\n`;
-            msg += `👥 Asistentes: ${personas}\n`;
-            if (acompanantes) msg += `🤝 Acompañantes: ${acompanantes}\n`;
-            if (cancion) msg += `🎵 Canción sugerida: ${cancion}\n`;
+            msg += `¡Confirmamos nuestra asistencia a tus XV!\n`;
+            msg += `👥 Asistentes: ${nombre}\n`;
+            if (restricciones) msg += `🍽️ Restricciones alimentarias: ${restricciones}\n`;
             if (mensaje) msg += `💌 Mensaje: ${mensaje}\n`;
           } else {
-            msg += `Lamentablemente no podré acompañarte a tus XV 😢.\n`;
+            msg += `Lamentablemente no podremos acompañarte a tus XV 😢.\n`;
             msg += `👤 De parte de: ${nombre}\n`;
             if (mensaje) msg += `💌 Mensaje: ${mensaje}\n`;
           }
@@ -297,51 +280,7 @@ function saveToLocalStore(item) {
 }
 
 /* ----------------------------------------------------
-   6. MODAL DE SUGERIR CANCIÓN
-   ---------------------------------------------------- */
-function initSongModal() {
-  const modal = document.getElementById("songModal");
-  const btnOpen = document.getElementById("btnOpenSongModal");
-  const btnClose = document.getElementById("btnCloseSongModal");
-  const form = document.getElementById("quickSongForm");
-  const feedback = document.getElementById("quickSongFeedback");
-
-  if (!modal || !btnOpen) return;
-
-  btnOpen.addEventListener("click", () => {
-    modal.classList.remove("hidden");
-    feedback.classList.add("hidden");
-  });
-
-  btnClose.addEventListener("click", () => {
-    modal.classList.add("hidden");
-  });
-
-  modal.addEventListener("click", (e) => {
-    if (e.target === modal) modal.classList.add("hidden");
-  });
-
-  form.addEventListener("submit", (e) => {
-    e.preventDefault();
-    const song = document.getElementById("quickSongInput").value.trim();
-    const guest = document.getElementById("quickSongUser").value.trim() || "Anónimo";
-
-    if (!song) return;
-
-    // Guardar en el campo del formulario principal también
-    const mainSongInput = document.getElementById("rsvpSong");
-    if (mainSongInput) mainSongInput.value = song;
-
-    feedback.classList.remove("hidden");
-    setTimeout(() => {
-      modal.classList.add("hidden");
-      form.reset();
-    }, 1200);
-  });
-}
-
-/* ----------------------------------------------------
-   7. PARTÍCULAS Y DESTELLOS MÁGICOS DE FONDO
+   6. PARTÍCULAS Y DESTELLOS MÁGICOS DE FONDO
    ---------------------------------------------------- */
 function initParticles() {
   const container = document.getElementById("particles-container");

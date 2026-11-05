@@ -135,7 +135,7 @@
         <div class="detail-card">
           <div class="detail-icon"><i class="fa-regular fa-clock"></i></div>
           <span class="detail-header">HORA</span>
-          <h4 class="detail-title">7:00 p. m.</h4>
+          <h4 class="detail-title">7:30 p. m.</h4>
           <p class="detail-footer">Recepción puntual</p>
         </div>
 
@@ -186,20 +186,8 @@
         <h3 class="gift-title">Lluvia de Sobres</h3>
         <p class="gift-text">
           El mayor regalo para mí es tu valiosa presencia y compartir juntos esta noche mágica.
-          Si deseas hacerme un detalle, en la entrada habrá un buzón dispuesto para lluvia de sobres.
+          Si deseas hacerme un detalle, adentro estará el buzón dispuesto para lluvia de sobres.
         </p>
-      </section>
-
-      <!-- SECCIÓN: Sugerir Canción -->
-      <section class="song-section">
-        <div class="song-card">
-          <i class="fa-solid fa-music"></i>
-          <h4>¿Qué canción no puede faltar?</h4>
-          <p>¡Ayúdanos a armar la playlist perfecta para bailar toda la noche!</p>
-          <button id="btnOpenSongModal" class="btn-secondary btn-small">
-            <i class="fa-solid fa-record-vinyl"></i> Sugerir canción
-          </button>
-        </div>
       </section>
 
       <!-- SECCIÓN PRINCIPAL: Confirmación de Asistencia (RSVP) -->
@@ -208,7 +196,7 @@
           <span class="rsvp-pill">CONFIRMACIÓN</span>
           <h3 class="rsvp-title">¿Nos acompañas?</h3>
           <p class="rsvp-desc">
-            Por favor confirma tu asistencia antes del <strong>10 de Noviembre de 2026</strong> para coordinar cada detalle de la recepción.
+            Por favor confirma tu asistencia antes del <strong>18 de Noviembre de 2026</strong> para coordinar cada detalle de la recepción.
           </p>
         </div>
 
@@ -216,9 +204,9 @@
           <!-- Campo: Nombre -->
           <div class="form-group">
             <label for="rsvpName">
-              <i class="fa-solid fa-user"></i> Tu Nombre Completo:
+              <i class="fa-solid fa-users"></i> Nombre completo tuyo y de los invitados:
             </label>
-            <input type="text" id="rsvpName" name="nombre" class="form-control" placeholder="Ej: Diana Pérez" required>
+            <input type="text" id="rsvpName" name="nombre" class="form-control" placeholder="Ej: Diana Pérez y Oscar Edwards" required>
           </div>
 
           <!-- Campo: Respuesta Sí/No -->
@@ -246,36 +234,10 @@
           <!-- Campos dinámicos si confirma que SÍ -->
           <div id="attendingDetails" class="attending-details">
             <div class="form-group">
-              <label for="rsvpPax">
-                <i class="fa-solid fa-users"></i> ¿Cuántas personas asistirán en tu grupo?
-              </label>
-              <select id="rsvpPax" name="personas" class="form-control">
-                <option value="1">1 persona</option>
-                <option value="2" selected>2 personas</option>
-                <option value="3">3 personas</option>
-                <option value="4">4 personas</option>
-              </select>
-            </div>
-
-            <div class="form-group">
-              <label for="rsvpGuestsNames">
-                <i class="fa-solid fa-address-book"></i> Nombres de los acompañantes:
-              </label>
-              <input type="text" id="rsvpGuestsNames" name="acompanantes" class="form-control" placeholder="Ej: Oscar Edwards">
-            </div>
-
-            <div class="form-group">
               <label for="rsvpDiet">
                 <i class="fa-solid fa-utensils"></i> ¿Alguna alergia o restricción alimentaria? <small>(opcional)</small>
               </label>
               <input type="text" id="rsvpDiet" name="restricciones" class="form-control" placeholder="Ej: Vegetariano, intolerancia a lácteos, etc.">
-            </div>
-
-            <div class="form-group">
-              <label for="rsvpSong">
-                <i class="fa-solid fa-guitar"></i> Canción recomendada para bailar: <small>(opcional)</small>
-              </label>
-              <input type="text" id="rsvpSong" name="cancion" class="form-control" placeholder="Nombre de canción y artista">
             </div>
           </div>
 
@@ -341,32 +303,6 @@
 
     </div><!-- /.card-frame -->
   </main>
-
-  <!-- Modal para Sugerir Canción Rápida -->
-  <div id="songModal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="songModalTitle">
-    <div class="modal-box">
-      <button class="modal-close" id="btnCloseSongModal" aria-label="Cerrar">&times;</button>
-      <div class="modal-header">
-        <i class="fa-solid fa-music modal-icon"></i>
-        <h3 id="songModalTitle">Sugerir Canción</h3>
-      </div>
-      <p class="modal-desc">¿Qué tema musical no puede faltar en la fiesta?</p>
-      <form id="quickSongForm">
-        <div class="form-group">
-          <input type="text" id="quickSongInput" class="form-control" placeholder="Canción y artista..." required>
-        </div>
-        <div class="form-group">
-          <input type="text" id="quickSongUser" class="form-control" placeholder="Tu nombre...">
-        </div>
-        <button type="submit" class="btn-primary full-width">
-          <i class="fa-solid fa-check"></i> Enviar Sugerencia
-        </button>
-      </form>
-      <div id="quickSongFeedback" class="alert alert-success hidden" style="margin-top: 15px;">
-        ¡Canción sugerida con éxito! 🎉
-      </div>
-    </div>
-  </div>
 
   <!-- Scripts -->
   <script src="js/app.js"></script>
