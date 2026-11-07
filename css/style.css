@@ -1015,6 +1015,146 @@ body {
   display: none !important;
 }
 
+/* ========================================================
+   MODAL DE BIENVENIDA CON MÚSICA (EXPERIENCIA FIXDATE)
+   ======================================================== */
+.welcome-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(44, 33, 64, 0.78);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  transition: opacity 0.4s ease, visibility 0.4s ease;
+}
+
+.welcome-modal-overlay.modal-fade-out {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.welcome-modal-card {
+  background: #ffffff;
+  border-radius: var(--radius-lg);
+  border: 2px solid rgba(212, 175, 55, 0.6);
+  box-shadow: 0 25px 60px rgba(92, 48, 140, 0.3),
+              0 0 0 4px rgba(255, 255, 255, 0.8),
+              0 0 0 7px rgba(212, 175, 55, 0.4);
+  max-width: 440px;
+  width: 100%;
+  padding: 34px 24px;
+  text-align: center;
+  position: relative;
+  animation: modalCardPop 0.4s ease-out;
+}
+
+@keyframes modalCardPop {
+  0% { transform: scale(0.85); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.welcome-crown {
+  font-size: 2.8rem;
+  margin-bottom: 8px;
+  filter: drop-shadow(0 4px 8px rgba(212, 175, 55, 0.4));
+  animation: floatCrown 3s ease-in-out infinite alternate;
+}
+
+@keyframes floatCrown {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-6px); }
+}
+
+.welcome-subtitle {
+  font-family: var(--font-luxury);
+  font-size: 0.82rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--secondary-purple);
+  margin-bottom: 2px;
+}
+
+.welcome-title {
+  font-family: var(--font-cursive);
+  font-size: 3.8rem;
+  color: var(--primary-purple);
+  line-height: 1.1;
+  font-weight: 400;
+  margin: 4px 0 10px 0;
+  text-shadow: 2px 2px 8px rgba(92, 48, 140, 0.15);
+}
+
+.welcome-music-hint {
+  font-size: 0.92rem;
+  color: var(--text-dark);
+  font-weight: 500;
+  margin: 14px 0 22px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.welcome-music-hint i {
+  color: var(--secondary-purple);
+}
+
+.welcome-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.btn-welcome-primary {
+  background: linear-gradient(135deg, var(--secondary-purple) 0%, var(--primary-purple) 100%);
+  color: #ffffff;
+  border: none;
+  border-radius: 30px;
+  padding: 14px 24px;
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  box-shadow: 0 6px 20px rgba(92, 48, 140, 0.35);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-welcome-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 26px rgba(92, 48, 140, 0.45);
+}
+
+.btn-welcome-secondary {
+  background: transparent;
+  color: var(--text-muted);
+  border: 1.5px solid #dcd3eb;
+  border-radius: 30px;
+  padding: 10px 20px;
+  font-family: var(--font-sans);
+  font-size: 0.88rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-welcome-secondary:hover {
+  background: var(--light-purple);
+  color: var(--primary-purple);
+  border-color: var(--accent-purple);
+}
+
 /* RESPONSIVE */
 @media (max-width: 480px) {
   .main-title {

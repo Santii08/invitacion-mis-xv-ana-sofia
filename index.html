@@ -29,14 +29,42 @@
   <!-- Partículas y destellos de fondo -->
   <div id="particles-container" aria-hidden="true"></div>
 
+  <!-- Modal de Bienvenida para Música (Experiencia FixDate / Boda y Quinceañera) -->
+  <div id="welcomeMusicModal" class="welcome-modal-overlay">
+    <div class="welcome-modal-card">
+      <div class="welcome-crown">👑</div>
+      <p class="welcome-subtitle">Te damos la bienvenida a los XV de</p>
+      <h2 class="welcome-title">Ana Sofía</h2>
+      
+      <div class="divider-heart">
+        <span class="line"></span>
+        <i class="fa-solid fa-heart"></i>
+        <span class="line"></span>
+      </div>
+
+      <p class="welcome-music-hint">
+        <i class="fa-solid fa-music"></i> La música de fondo es parte de la experiencia mágica
+      </p>
+
+      <div class="welcome-buttons">
+        <button id="btnEnterMusic" class="btn-welcome-primary">
+          <i class="fa-solid fa-volume-high"></i> Ingresar con música
+        </button>
+        <button id="btnEnterNoMusic" class="btn-welcome-secondary">
+          Ingresar sin música
+        </button>
+      </div>
+    </div>
+  </div>
+
   <!-- Botón flotante de Música -->
   <aside class="music-controller" aria-label="Controlador de música">
     <button id="btnMusic" class="music-btn" title="Reproducir / Pausar Música" aria-label="Música de fondo">
       <i class="fa-solid fa-compact-disc disc-icon"></i>
       <span class="music-tooltip">Música de fondo</span>
     </button>
-    <audio id="bgMusic" loop preload="auto">
-      <!-- Canción: So This Is Love (Cinderella) -->
+    <audio id="bgMusic" src="assets/so-this-is-love.mp3" preload="auto" loop playsinline webkit-playsinline>
+      <source src="assets/so-this-is-love.mp3" type="audio/mpeg">
       <source src="assets/so-this-is-love.mp3" type="audio/mp3">
     </audio>
   </aside>

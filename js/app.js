@@ -101,36 +101,83 @@ function initCountdown() {
 function initMusicPlayer() {
   const audio = document.getElementById("bgMusic");
   const btn = document.getElementById("btnMusic");
+  const modal = document.getElementById("welcomeMusicModal");
+  const btnEnterMusic = document.getElementById("btnEnterMusic");
+  const btnEnterNoMusic = document.getElementById("btnEnterNoMusic");
+
   if (!audio || !btn) return;
 
-  let isPlaying = false;
+  audio.volume = 0.8;
 
-  btn.addEventListener("click", () => {
-    if (isPlaying) {
-      audio.pause();
-      btn.classList.remove("playing");
-      isPlaying = false;
-    } else {
-      audio.play().then(() => {
+  function playAudio() {
+    // Asegurar que la fuente esté cargada
+    if (!audio.src || audio.src === "") {
+      audio.src = "assets/so-this-is-love.mp3";
+    }
+    const promise = audio.play();
+    if (promise !== undefined) {
+      promise.then(() => {
         btn.classList.add("playing");
-        isPlaying = true;
       }).catch(err => {
-        console.log("Autoplay prevenido por el navegador:", err);
+        console.warn("Autoplay bloqueado por el navegador:", err);
+        btn.classList.remove("playing");
       });
     }
+  }
+
+  function pauseAudio() {
+    audio.pause();
+    btn.classList.remove("playing");
+  }
+
+  function toggleAudio() {
+    if (audio.paused) {
+      playAudio();
+    } else {
+      pauseAudio();
+    }
+  }
+
+  // Click en el botón flotante del disco
+  btn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    toggleAudio();
   });
 
-  // Intentar reproducir suavemente en la primera interacción del usuario con la página
-  const startAudioOnFirstClick = () => {
-    if (!isPlaying) {
-      audio.play().then(() => {
-        btn.classList.add("playing");
-        isPlaying = true;
-      }).catch(() => {});
+  // Eventos de reproducción del audio para mantener la animación del disco sincronizada
+  audio.addEventListener("play", () => btn.classList.add("playing"));
+  audio.addEventListener("pause", () => btn.classList.remove("playing"));
+  audio.addEventListener("ended", () => btn.classList.remove("playing"));
+
+  // Modal de bienvenida al ingresar a la página (experiencia FixDate)
+  if (modal && btnEnterMusic && btnEnterNoMusic) {
+    btnEnterMusic.addEventListener("click", () => {
+      playAudio();
+      modal.classList.add("modal-fade-out");
+      setTimeout(() => {
+        modal.style.display = "none";
+      }, 400);
+    });
+
+    btnEnterNoMusic.addEventListener("click", () => {
+      pauseAudio();
+      modal.classList.add("modal-fade-out");
+      setTimeout(() => {
+        modal.style.display = "none";
+      }, 400);
+    });
+  }
+
+  // Respaldo: si el usuario hace clic en cualquier lugar por primera vez y el modal no está
+  const onFirstInteraction = () => {
+    if (audio.paused && (!modal || modal.style.display === "none")) {
+      playAudio();
     }
-    document.removeEventListener("click", startAudioOnFirstClick);
+    document.removeEventListener("click", onFirstInteraction);
+    document.removeEventListener("touchstart", onFirstInteraction);
   };
-  document.addEventListener("click", startAudioOnFirstClick, { once: true });
+  document.addEventListener("click", onFirstInteraction, { once: true });
+  document.addEventListener("touchstart", onFirstInteraction, { once: true });
 }
 
 /* ----------------------------------------------------
